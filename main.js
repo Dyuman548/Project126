@@ -1,3 +1,8 @@
+song = "";
+
+scoreRightWrist = 0;
+scoreLeftWrist = 0;
+
 song1 = "music.mp3";
 song2 = "music2.mp3";
 
@@ -33,7 +38,11 @@ function gotPoses(results)
 {
     if(results.length > 0)
     {
-       
+        console.log(results);
+        scoreRightWrist = results[0].pose.keypoints[10].score;
+        scoreLeftWrist = results[0].pose.keypoints[9].score;
+        console.log("scoreRightWrist = " + scoreRightWrist + " scoreLeftWrist = " + scoreLeftWrist);
+
         rightWristX = results[0].pose.rightWrist.x;
         rightWristY = results[0].pose.rightWrist.y;
         console.log("rightWristX = " + rightWristX + "rightWristY = " + rightWristY);
@@ -44,7 +53,20 @@ function gotPoses(results)
 
     }
 }
-
 function draw() {
     image(video, 0, 0, 600, 500);
+
+    song_variable.isPlaying(song1);
+
+    fill("#FF0000");
+    stroke("#FF0000");
+
+    if (scoreRightWrist > 0.2)
+    {
+        circle(rightWristX,rightWristY,20);
+    
+        song.stop("music2mp3");
+    
+    }
+
 }
